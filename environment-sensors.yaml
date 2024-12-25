@@ -1,5 +1,5 @@
 substitutions:
-  device_name: "environment-sensor-lite"
+  name: "environment-sensor-lite"
   friendly_name: "Environment Sensor Lite"
   log_level: "DEBUG"
   illuminance_update_interval: "60s"
