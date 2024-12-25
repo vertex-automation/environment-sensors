@@ -23,7 +23,7 @@ jobs:
         run: pip install esphome
 
       - name: Validate Configuration
-        run: esphome environment-sensors.yaml validate
+        run: esphome config environment-sensors.yaml validate
 
       - name: Compile Firmware
         run: esphome environment-sensors.yaml compile
