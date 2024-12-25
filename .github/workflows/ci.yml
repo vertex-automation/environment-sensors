@@ -1,0 +1,57 @@
+name: CI and Publish
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install ESPHome
+        run: pip install esphome
+
+      - name: Validate Configuration
+        run: esphome environment-sensors.yaml validate
+
+      - name: Compile Firmware
+        run: esphome environment-sensors.yaml compile
+
+      - name: Upload Firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: Firmware
+          path: .esphome/build/*.bin
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          publish_branch: gh-pages
+
+      - name: Publish Manifest and Firmware
+        run: |
+          mkdir -p gh-pages
+          cp manifest.json gh-pages/
+          cp -R firmware gh-pages/
+          echo "Manifest and firmware published to GitHub Pages"

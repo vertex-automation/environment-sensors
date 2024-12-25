@@ -1,0 +1,67 @@
+substitutions:
+  name: "${device_name}"
+  friendly_name: "${friendly_name}"
+  log_level: "DEBUG"
+  illuminance_update_interval: "60s"
+
+esphome:
+  name: ${name}
+  comment: Environment Sensors Lite
+  friendly_name: ${friendly_name}
+  name_add_mac_suffix: True
+  project: 
+    name: VertexAutomation.Environment Sensors Lite
+    version: "1.0.0"
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+logger:
+  level: ${log_level}
+
+api:
+
+ota:
+  - platform: esphome
+    id: ota_esphome
+  - platform: http_request
+    id: ota_http_request
+
+http_request:
+
+wifi:
+
+improv_serial:
+
+i2c:
+  sda: 8
+  scl: 9
+  scan: true
+
+sensor:
+  - platform: veml7700
+    address: 0x10
+    update_interval: 60s
+    ambient_light: "Ambient light"
+    infrared: "Infrared"
+    full_spectrum: "Full Spectrum"
+    full_spectrum_counts: "Full Spectrum Counts"
+    ambient_light_counts: "Ambient Light Counts"
+    actual_integration_time: "Actual Integration Time"
+    actual_gain:
+      name: "Actual gain"
+    integration_time : 400ms
+
+  - platform: wifi_signal
+    name: "WiFi Signal Strength"
+    id: rssi_sensor
+    update_interval: 60s
+
+
+button:
+  - platform: restart
+    icon: mdi:power-cycle
+    name: "ESP Reboot"
+
