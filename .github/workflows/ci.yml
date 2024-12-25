@@ -26,7 +26,7 @@ jobs:
         run: esphome config environment-sensors.yaml
 
       - name: Compile Firmware
-        run: esphome environment-sensors.yaml compile
+        run: esphome compile environment-sensors.yaml 
 
       - name: Upload Firmware
         uses: actions/upload-artifact@v3
