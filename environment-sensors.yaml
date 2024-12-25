@@ -1,6 +1,6 @@
 substitutions:
-  name: "${device_name}"
-  friendly_name: "${friendly_name}"
+  device_name: "environment-sensor-lite"
+  friendly_name: "Environment Sensor Lite"
   log_level: "DEBUG"
   illuminance_update_interval: "60s"
 
@@ -9,7 +9,7 @@ esphome:
   comment: Environment Sensors Lite
   friendly_name: ${friendly_name}
   name_add_mac_suffix: True
-  project: 
+  project:
     name: VertexAutomation.Environment Sensors Lite
     version: "1.0.0"
 
@@ -52,16 +52,14 @@ sensor:
     actual_integration_time: "Actual Integration Time"
     actual_gain:
       name: "Actual gain"
-    integration_time : 400ms
+    integration_time: 400ms
 
   - platform: wifi_signal
     name: "WiFi Signal Strength"
     id: rssi_sensor
     update_interval: 60s
 
-
 button:
   - platform: restart
     icon: mdi:power-cycle
     name: "ESP Reboot"
-
