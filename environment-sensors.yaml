@@ -44,22 +44,62 @@ sensor:
   - platform: veml7700
     address: 0x10
     update_interval: 60s
-    ambient_light: "Ambient light"
-    infrared: "Infrared"
-    full_spectrum: "Full Spectrum"
-    full_spectrum_counts: "Full Spectrum Counts"
-    ambient_light_counts: "Ambient Light Counts"
-    actual_integration_time: "Actual Integration Time"
+    ambient_light:
+      name: "Ambient Light"
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: "lx"
+      icon: mdi:brightness-7
+      accuracy_decimals: 0
+      device_class: illuminance
+      state_class: measurement
+    ambient_light_counts:
+      name: "Ambient Light Counts"
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: "#"
+      icon: mdi:brightness-6
+      accuracy_decimals: 0
+      device_class: illuminance
+      state_class: measurement
+    actual_integration_time:
+      name: "Actual Integration Time"
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: "ms"
+      icon: mdi:timer-outline
+      accuracy_decimals: 0
+      state_class: measurement
     actual_gain:
-      name: "Actual gain"
-    integration_time: 400ms
+      name: "Actual Gain"
+      disabled_by_default: false
+      force_update: false
+      icon: mdi:multiplication
+      accuracy_decimals: 3
+      state_class: measurement
+    integration_time: 400
+    auto_mode: true
+    gain: "1/8X"
+    lux_compensation: true
+    glass_attenuation_factor: 1.0
 
   - platform: wifi_signal
     name: "WiFi Signal Strength"
     id: rssi_sensor
     update_interval: 60s
+    disabled_by_default: false
+    force_update: false
+    unit_of_measurement: "dBm"
+    accuracy_decimals: 0
+    device_class: signal_strength
+    state_class: measurement
+    entity_category: diagnostic
 
 button:
   - platform: restart
     icon: mdi:power-cycle
     name: "ESP Reboot"
+    disabled_by_default: false
+    entity_category: config
+    device_class: restart
+
