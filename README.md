@@ -21,6 +21,3 @@ The **Environment Sensors Lite** is a smart IoT device for monitoring ambient li
 - **Full Spectrum Light (lx):** Captures light across the full spectrum.
 - **Ambient Light Counts (#):** Raw counts from the light sensor.
 - **WiFi Signal Strength (dBm):** Diagnostics for wireless connectivity.
-
-## License
-This project is licensed under the [MIT License](LICENSE).
