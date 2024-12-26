@@ -11,7 +11,7 @@ esphome:
   name_add_mac_suffix: True
   project:
     name: VertexAutomation.Environment Sensor
-    version: "1.0.0"
+    version: "1.0.1"
 
 esp32:
   board: esp32-c3-devkitm-1
@@ -114,7 +114,7 @@ sensor:
   - platform: wifi_signal
     name: "WiFi Signal Strength"
     id: rssi_sensor
-    update_interval: 300s
+    update_interval: 600s
     disabled_by_default: false
     force_update: false
     unit_of_measurement: "dBm"
