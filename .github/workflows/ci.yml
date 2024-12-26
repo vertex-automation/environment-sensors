@@ -60,7 +60,7 @@ jobs:
                 "ota": {
                   "md5": "${{ env.MD5 }}",
                   "path": "firmware/environment-sensors-ota-v${{ env.VERSION }}.bin",
-                  "release_url": "https://github.com/your-org/your-repo/releases/latest"
+                  "release_url": "https://github.com/vertex-automation/environment-sensors/releases"
                 }
               }
             ]

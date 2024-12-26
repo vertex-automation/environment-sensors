@@ -11,7 +11,14 @@ esphome:
   name_add_mac_suffix: True
   project:
     name: VertexAutomation.Environment Sensor
-    version: "1.0.1"
+    version: "1.0.2"
+
+update:
+  - platform: http_request
+    id: update_http_request
+    name: Firmware Update
+    source: https://vertex-automation.github.io/environment-sensors/manifest.json
+    disabled_by_default: true
 
 esp32:
   board: esp32-c3-devkitm-1
@@ -114,7 +121,7 @@ sensor:
   - platform: wifi_signal
     name: "WiFi Signal Strength"
     id: rssi_sensor
-    update_interval: 600s
+    update_interval: 1800s
     disabled_by_default: false
     force_update: false
     unit_of_measurement: "dBm"
@@ -126,7 +133,7 @@ sensor:
 button:
   - platform: restart
     icon: mdi:power-cycle
-    name: "Reboot"
+    name: "Reboot Device"
     disabled_by_default: false
     entity_category: config
     device_class: restart
