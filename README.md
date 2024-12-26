@@ -1,7 +1,7 @@
-# Environment Sensors Lite
+# Environment Sensors
 
 ## Overview
-The **Environment Sensors Lite** is a smart IoT device for monitoring ambient light, infrared light, full-spectrum light, and WiFi signal strength. It is fully integrated with Home Assistant and supports OTA updates for seamless firmware management.
+The **Environment Sensors** is a smart IoT device for monitoring ambient light, infrared light, full-spectrum light, and WiFi signal strength. It is fully integrated with Home Assistant and supports OTA updates for seamless firmware management.
 
 ## Features
 - **I2C Sensor:** VEML7700 for detailed ambient light, infrared, and full-spectrum light monitoring.
