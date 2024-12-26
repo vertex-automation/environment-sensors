@@ -1,0 +1,14 @@
+{
+  "name": "Environment Sensor",
+  "version": "1.0.1",
+  "builds": [
+    {
+      "chipFamily": "ESP32-C3",
+      "ota": {
+        "md5": "66effe059b9c68a5dd622d29427ef0f2",
+        "path": "firmware/environment-sensors-ota-v1.0.1.bin",
+        "release_url": "https://github.com/your-org/your-repo/releases/latest"
+      }
+    }
+  ]
+}
