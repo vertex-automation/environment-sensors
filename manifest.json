@@ -1,12 +1,12 @@
 {
   "name": "Environment Sensor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "builds": [
     {
       "chipFamily": "ESP32-C3",
       "ota": {
-        "md5": "a9840fd25e0a687d3e9fa72e3e928599",
-        "path": "firmware/environment-sensors-ota-v1.0.2.bin",
+        "md5": "6b0b7c43d3a81439df8a361cd8800d6b",
+        "path": "firmware/environment-sensors-ota-v1.0.3.bin",
         "release_url": "https://github.com/vertex-automation/environment-sensors/releases"
       }
     }
