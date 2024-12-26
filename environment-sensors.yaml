@@ -1,16 +1,16 @@
 substitutions:
-  name: "environment-sensor-lite"
-  friendly_name: "Environment Sensor Lite"
+  name: "environment-sensor"
+  friendly_name: "Environment Sensor"
   log_level: "DEBUG"
   illuminance_update_interval: "60s"
 
 esphome:
   name: ${name}
-  comment: Environment Sensors Lite
+  comment: Environment Sensor
   friendly_name: ${friendly_name}
   name_add_mac_suffix: True
   project:
-    name: VertexAutomation.Environment Sensors Lite
+    name: VertexAutomation.Environment Sensor
     version: "1.0.0"
 
 esp32:
@@ -53,7 +53,7 @@ i2c:
 sensor:
   - platform: veml7700
     address: 0x10
-    update_interval: 60s
+    update_interval: ${illuminance_update_interval}
     ambient_light:
       name: "Ambient Light"
       disabled_by_default: false
@@ -69,6 +69,24 @@ sensor:
       force_update: false
       unit_of_measurement: "#"
       icon: mdi:brightness-6
+      accuracy_decimals: 0
+      device_class: illuminance
+      state_class: measurement
+    infrared:
+      name: "Infrared Light"
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: "lx"
+      icon: mdi:brightness-auto
+      accuracy_decimals: 0
+      device_class: illuminance
+      state_class: measurement
+    full_spectrum:
+      name: "Full Spectrum Light"
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: "lx"
+      icon: mdi:weather-sunny
       accuracy_decimals: 0
       device_class: illuminance
       state_class: measurement
@@ -108,8 +126,7 @@ sensor:
 button:
   - platform: restart
     icon: mdi:power-cycle
-    name: "ESP Reboot"
+    name: "Reboot"
     disabled_by_default: false
     entity_category: config
     device_class: restart
-
