@@ -114,7 +114,7 @@ sensor:
   - platform: wifi_signal
     name: "WiFi Signal Strength"
     id: rssi_sensor
-    update_interval: 60s
+    update_interval: 300s
     disabled_by_default: false
     force_update: false
     unit_of_measurement: "dBm"
