@@ -1,0 +1,91 @@
+name: CI and Publish Firmware
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install ESPHome
+        run: pip install esphome
+
+      - name: Read Version from config/version.json
+        run: |
+          VERSION=$(jq -r '.version' config/version.json)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Validate Configuration
+        run: esphome config environment-sensors.yaml
+
+      - name: Compile Firmware
+        run: |
+          esphome compile environment-sensors.yaml
+          FIRMWARE_FILE=$(find .esphome/build -name '*.ota.bin' | head -n 1)
+          if [ -z "$FIRMWARE_FILE" ]; then
+            echo "Error: Firmware file not found after compilation!" >&2
+            exit 1
+          fi
+          RENAMED_FIRMWARE=".esphome/build/environment-sensors-ota-v${{ env.VERSION }}.bin"
+          mv "$FIRMWARE_FILE" "$RENAMED_FIRMWARE"
+          echo "FIRMWARE_PATH=$RENAMED_FIRMWARE" >> $GITHUB_ENV
+
+      - name: Calculate MD5 of Firmware
+        run: |
+          MD5_HASH=$(md5sum "${{ env.FIRMWARE_PATH }}" | awk '{ print $1 }')
+          echo "MD5=$MD5_HASH" >> $GITHUB_ENV
+
+      - name: Generate Manifest
+        run: |
+          echo "Creating manifest.json..."
+          cat <<EOF > manifest.json
+          {
+            "name": "Environment Sensor",
+            "version": "${{ env.VERSION }}",
+            "builds": [
+              {
+                "chipFamily": "ESP32-C3",
+                "ota": {
+                  "md5": "${{ env.MD5 }}",
+                  "path": "firmware/environment-sensors-ota-v${{ env.VERSION }}.bin",
+                  "release_url": "https://github.com/your-org/your-repo/releases/latest"
+                }
+              }
+            ]
+          }
+          EOF
+
+      - name: Copy Manifest and Firmware to Publish Directory
+        run: |
+          mkdir -p gh-pages/firmware
+          cp "${{ env.FIRMWARE_PATH }}" gh-pages/firmware/
+          cp manifest.json gh-pages/
+          echo "Contents of gh-pages directory:"
+          ls -alR gh-pages
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: gh-pages
+          publish_branch: gh-pages
+
+      - name: Upload Firmware and Manifest as Artifacts (Optional)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Firmware and Manifest
+          path: |
+            ${{ env.FIRMWARE_PATH }}
+            manifest.json
